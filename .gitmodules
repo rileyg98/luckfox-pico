@@ -1,3 +1,6 @@
 [submodule "sdk"]
 	path = sdk
 	url = https://github.com/rileyg98/luckfox-pico-sdk.git
+[submodule "ubuntu"]
+	path = sdk/sysdrv/tools/board/ubuntu
+	url = https://github.com/luckfox-eng33/pico_ubuntu.git
