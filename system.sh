@@ -15,13 +15,13 @@ while getopts ":f:d:" opt; do
 done
 
 DEVICE_ID="6"
-# These two are needed for the new SDK
-EMMC_ID="0"
+# These two are needed for the new SDK - SPI NAND
+EMMC_ID="1"
 BUILDROOT_ID="0"
 case $DEVICE_NAME in
   pico-mini-b) DEVICE_ID="6" ;;
-  pico-plus) DEVICE_ID="7" ;;
-  pico-pro-max) DEVICE_ID="8" ;;
+  pico-plus) DEVICE_ID="6" ;;
+  pico-pro-max) DEVICE_ID="6" ;;
   *)
     echo "Invalid device: ${DEVICE_NAME}."
     exit 1
