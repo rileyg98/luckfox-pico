@@ -15,6 +15,9 @@ while getopts ":f:d:" opt; do
 done
 
 DEVICE_ID="6"
+# These two are needed for the new SDK
+EMMC_ID="0"
+BUILDROOT_ID="0"
 case $DEVICE_NAME in
   pico-mini-b) DEVICE_ID="6" ;;
   pico-plus) DEVICE_ID="7" ;;
@@ -29,14 +32,11 @@ rm -rf sdk/sysdrv/custom_rootfs/
 mkdir -p sdk/sysdrv/custom_rootfs/
 cp "$ROOTFS_NAME" sdk/sysdrv/custom_rootfs/
 
-pushd sdk || exit
-
-pushd tools/linux/toolchain/arm-rockchip830-linux-uclibcgnueabihf/ || exit
+cd sdk/tools/linux/toolchain/arm-rockchip830-linux-uclibcgnueabihf/ 
 source env_install_toolchain.sh
-popd || exit
-
+cd ../../../../
 rm -rf .BoardConfig.mk
-echo "$DEVICE_ID" | ./build.sh lunch
+echo -e "$DEVICE_ID\n$EMMC_ID\n$BUILDROOT_ID" | ./build.sh lunch
 echo "export RK_CUSTOM_ROOTFS=../sysdrv/custom_rootfs/$ROOTFS_NAME" >> .BoardConfig.mk
 echo "export RK_BOOTARGS_CMA_SIZE=\"1M\"" >> .BoardConfig.mk
 
@@ -50,7 +50,7 @@ echo "export RK_BOOTARGS_CMA_SIZE=\"1M\"" >> .BoardConfig.mk
 ./build.sh firmware
 ./build.sh save
 
-popd || exit
+cd ..
 
 rm -rf output
 mkdir -p output
